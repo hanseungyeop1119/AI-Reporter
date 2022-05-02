@@ -1,3 +1,5 @@
+import bs4
+import pandas as pd
 print('asd')
 # This is a sample Python script.
 

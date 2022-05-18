@@ -1,0 +1,30 @@
+import tensorflow as tf
+import pandas as pd
+
+data = pd.read_csv('../data/titles.cvs')
+titles = data['title'].values
+
+tokenizer = tf.keras.preprocessing.text.Tokenizer()
+tokenizer.fit_on_texts(titles)
+
+sequences = []
+max_len = 0
+
+for i in range(len(titles)):
+    sequence = tokenizer.texts_to_sequences([titles[i]])[0]
+    sequences.append(sequence)
+    max_len = max(max_len, len(sequence))
+    # print(titles[i])
+    # print(sequence)
+    # print(max_len)
+
+pad_sequences = tf.keras.preprocessing.sequence.pad_sequences(sequences, maxlen=max_len)
+print(pad_sequences)
+categorical_sequence = tf.keras.utils.to_categorical(sequence, num_classes=70000)
+print(categorical_sequence)
+
+# data = [39, 12, 40, 6, 3]
+#
+# categorical_data = tf.keras.utils.to_categorical(data, num_classes=41)
+# print(categorical_data)
+
